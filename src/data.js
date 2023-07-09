@@ -3,7 +3,6 @@ const fs= require('fs');
 
 
 function verifyPath(path){
-
     let absolutePath;
     if(pathModule.isAbsolute(path)){
       absolutePath=path
@@ -15,7 +14,6 @@ function verifyPath(path){
 
 function pathExists(path){
     return new Promise((resolve, reject)=>{
-
         fs.stat(path, (err)=>{
             if(!err){
                 resolve(true)
@@ -26,9 +24,8 @@ function pathExists(path){
     })
 }
 
-function checkExtension(path){
+function extensionCheck(path){
     return new Promise((resolve, reject)=>{
-
         const extension=pathModule.extname(path);
         if(extension !== '.md'){
             reject(new Error('The file is not markdown'));
@@ -41,15 +38,13 @@ function checkExtension(path){
 
 function extractLinks(path){
     return new Promise((resolve, reject) => {
-
         fs.readFile(path, 'utf-8', (err, data)=>{
             if (err) {
                 console.error(err);
                 reject(err)
             }
             
-            const regex = /(\[.*\])(\((http)(?:s)?(\:\/\/).*\))/g;
-              
+            const regex = /(\[.*\])(\((http)(?:s)?(\:\/\/).*\))/g;          
             if(regex.test(data)){
                 const allLinks=data.match(regex);
                 let array=[];
@@ -69,6 +64,6 @@ function extractLinks(path){
 }
 
 
-module.exports={verifyPath, pathExists, checkExtension, extractLinks}
+module.exports={verifyPath, pathExists, extensionCheck, extractLinks}
 
 
