@@ -40,7 +40,6 @@ function extractLinks(path){
     return new Promise((resolve, reject) => {
         fs.readFile(path, 'utf-8', (err, data)=>{
             if (err) {
-                console.error(err);
                 reject(err)
             }
             
@@ -50,9 +49,9 @@ function extractLinks(path){
                 let array=[];
                 allLinks.forEach(link=>{
                     array.push({
-                        "href":link.replace(/(\[.*\])/g, ""),
-                        "text":link.replace(/(\((http)(?:s)?(\:\/\/).*\))/g, ""),
-                        "file":path,
+                        href:link.replace(/(\[.*\])/g, ""),
+                        text:link.replace(/(\((http)(?:s)?(\:\/\/).*\))/g, ""),
+                        file:path,
                     })
                 })
                 resolve(array)
