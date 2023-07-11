@@ -1,5 +1,6 @@
 const pathModule = require('path');
 const fs= require('fs');
+const axios=require('axios')
 
 
 function verifyPath(path){
@@ -43,25 +44,25 @@ function extractLinks(path){
                 reject(err)
             }
             
-            const regex = /(\[.*\])(\((http)(?:s)?(\:\/\/).*\))/g;          
-            if(regex.test(data)){
-                const allLinks=data.match(regex);
-                let array=[];
-                allLinks.forEach(link=>{
-                    array.push({
-                        href:link.replace(/(\[.*\])/g, ""),
-                        text:link.replace(/(\((http)(?:s)?(\:\/\/).*\))/g, ""),
+            const regex = /\[(.*?)\]\((.*?)\)/g;
+            const matches=regex.exec(data);
+            let infoLinks=[];
+
+            if(matches){
+                matches.forEach(()=>{
+                    infoLinks.push({
+                        href:matches[2],
+                        text:matches[1],
                         file:path,
                     })
                 })
-                resolve(array)
-            } else {
+                resolve(infoLinks) 
+            }else {
                 reject('No links found')
             }
         })
     })
 }
-
 
 module.exports={verifyPath, pathExists, extensionCheck, extractLinks}
 
