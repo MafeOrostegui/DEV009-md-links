@@ -1,6 +1,6 @@
 const {mdLinks}=require('./index.js');
 
-mdLinks('linktest.md')
+mdLinks('linktest.md', true)
   .then(resultado=>{
     console.log('Links found:', resultado)
   })

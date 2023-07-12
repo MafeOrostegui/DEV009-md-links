@@ -16,7 +16,8 @@
   },
   "scripts": {
     "eslint": "eslint --ext .js src/ test/",
-    "test": "jest --verbose --coverage"
+    "test": "jest --verbose --coverage",
+    "start": "node src/cli.js"
   },
   "devDependencies": {
     "jest": "^29.6.1"
