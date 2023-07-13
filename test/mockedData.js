@@ -16,8 +16,8 @@ const dataMock={
   ],
 
   mockNoResponses: [   
-      { status: 200, statusText: 'OK' },
-      { status: 404, statusText: 'Not Found' } 
+    { status: 200, statusText: 'OK' },
+    { status: 404, statusText: 'Not Found' } 
   ],
     
   successfulHttpResponse:[
@@ -50,9 +50,9 @@ const dataMock={
   ],
 
   statusFailureResponse: [
-  { href: 'https://example.com', text: 'Link 1', status: undefined, statusText: 'fail' },
-  { href: 'https://example.org', text: 'Link 2', status: undefined, statusText: 'fail' }]
-
+    { href: 'https://example.com', text: 'Link 1', status: undefined, statusText: 'fail' },
+    { href: 'https://example.org', text: 'Link 2', status: undefined, statusText: 'fail' }
+  ]
 }
 
 module.exports={dataMock}
