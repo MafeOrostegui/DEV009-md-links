@@ -1,4 +1,4 @@
-const { verifyPath, pathExists, extensionCheck, readTextFile} = require('./data');
+const { verifyPath, pathExists, extensionCheck, readTextFile, validateLinks} = require('./data');
 
 function mdLinks(path, validate) {
   return new Promise((resolve, reject) => {
@@ -7,13 +7,9 @@ function mdLinks(path, validate) {
     pathExists(absolutePath)
       .then((() => extensionCheck(absolutePath)))
       .then((verifiedFile) => {
-        readTextFile(verifiedFile, validate)
-          .then(links=>{
-            resolve(links)
-          })
-          .catch(error => {
-            reject(error);
-          });
+        (validate !== true)
+        ? resolve(readTextFile(verifiedFile))
+        : readTextFile(verifiedFile, true).then((links) => resolve(validateLinks(links)))
       })
       .catch(error => {
         reject(error);
@@ -22,5 +18,5 @@ function mdLinks(path, validate) {
   });
 }
 
-module.exports={mdLinks}
+module.exports={ mdLinks }
 

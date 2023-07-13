@@ -11,42 +11,37 @@ function verifyPath(path) {
 
 
 function pathExists(path){
-  return new Promise((resolve, reject)=>{
-    fs.stat(path, (err)=>{
+  return new Promise((resolve, reject) => {
+    fs.stat(path, (err) => {
     (!err)
-    ?resolve(true):reject('Path does not exist', err);
+    ? resolve(true) : reject('Path does not exist', err);
     });
   })
 }
 
 
 function extensionCheck(path){
-  return new Promise((resolve, reject)=>{
+  return new Promise((resolve, reject) => {
     const extension=pathModule.extname(path);
     (extension !== '.md')
-    ?reject(new Error('The file is not markdown')):resolve(path);
+    ? reject(new Error('The file is not markdown')) : resolve(path);
   })
 }
 
 
-function readTextFile(path, validate) {
+function readTextFile(path,validate) {
   return new Promise((resolve, reject) => {
     fs.readFile(path, 'utf-8', (err, data) => {
       if (err) reject(err);
 
-      const links=extractLinks(path, data)
+      const links=extractLinks(path, data);
 
-      if(links.length===0){
-        reject('No links found')
-      }else{         
-        (validate !== true) 
-        ?resolve(links)
-        :validateLinks(links)
-        .then(links=>resolve(links))
-      }
+      (links.length>0)
+      ? resolve(extractLinks(path, data)) : reject('No links found')
     });
   });
 }
+
 
 function extractLinks(path, data){
   const regex = /\[(.*?)\]\((.*?)\)/g;
@@ -67,17 +62,15 @@ function extractLinks(path, data){
 function validateLinks(links) {
   const forEachLink = links.map(link => {
     return axios.head(link.href)
-      .then((response) => {
-        if (response.status === 200) {
+      .then((response) => {     
           const httpResponse={status: response.status, statusText: response.statusText}
           Object.assign(link, httpResponse);
           return link
-        }
       })
       .catch((error) => {
-        const httpResponse={status: error.status, statusText: "fail"}
+        const httpResponse = { status: error.response ? error.response.status : undefined, statusText: "fail" };
         Object.assign(link, httpResponse);
-        return link
+        return link;
       });
   });
   
