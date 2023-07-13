@@ -1,6 +1,9 @@
-const { extractLinks } = require('../src/data.js');
-const {mdLinks} = require('../src/index.js');
+const { readTextFile, validateLinks } = require('../src/data.js');
+const { mdLinks } = require('../src/index.js');
+const { dataMock }=require('./mockedData.js')
+const axios=require('axios');
 
+jest.mock('axios');
 
 describe('mdLinks', () => {
 
@@ -30,11 +33,11 @@ describe('mdLinks', () => {
 
   test('should reject with an error when there is an error reading the file', () => {
     const path = '/path/to/nonexistent-file.md';
-    return expect(extractLinks(path)).rejects.toThrow();
+    return expect(readTextFile(path)).rejects.toThrow();
   });
 
   test('should return the links that are in the path', () => {
-    return expect(extractLinks('linktest.md')).resolves.toEqual(
+    return expect(readTextFile('linktest.md')).resolves.toEqual(
       expect.arrayContaining([
         expect.objectContaining({
           href: expect.any(String),
@@ -50,4 +53,14 @@ describe('mdLinks', () => {
       expect(links).toBe('No links found');
     })
   })
+
+  test('Should return the links with the respective validation-http successful response', () => {
+    axios.head.mockImplementation(() => Promise.resolve(dataMock.mockResponses.shift()));
+  
+    return mdLinks('linktest.md', true)
+      .then(results => {
+        expect(results).toEqual(dataMock.successfulHttpResponse);
+      });
+  });
+
 });
