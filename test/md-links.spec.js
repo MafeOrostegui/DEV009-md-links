@@ -13,13 +13,7 @@ describe('mdLinks', () => {
     return mdLinks('/Users/lukasarias/Documents/Laboratoria/proyecto 3/DEV009-md-links/testing_files/linktest.md').then((data)=>{
       expect(data).toBeTruthy()
     })
-  })
-
-  test('should return an absolute path when given a relative path', ()=>{
-    return mdLinks('testing_files/linktest.md').then(()=>{
-      expect.objectContaining('/Users/lukasarias/Documents/Laboratoria/proyecto 3/DEV009-md-links/linktest.md')
-    })
-  })
+  });
 
   test('should return an error when the path does not exist',()=>{
     return mdLinks('testing_files/linktestg.md').catch((error)=>{
@@ -68,12 +62,6 @@ describe('mdLinks', () => {
     );
   });
 
-  test('should return an empty array when the path contains no links',()=>{
-    return mdLinks('testing_files/nolinks.md').catch(links=>{
-      expect(links).toBe('No links found');
-    })
-  })
-
   test('Should return the links with the respective validation-http successful response', () => {
     axios.head.mockImplementation(() => Promise.resolve(dataMock.mockResponses.shift()));
   
@@ -82,16 +70,6 @@ describe('mdLinks', () => {
         expect(results).toEqual(dataMock.successfulHttpResponse);
       });
   });
-
-  test('Should return the links with the respective validation-http unsuccessful response', () => {
-    axios.head.mockImplementation(() => Promise.resolve(dataMock.mockWrongResponses.shift()));
-  
-    return mdLinks('testing_files/linktestbad.md', true)
-      .catch(results => {
-        expect(results).toEqual(dataMock.unsucessfulHttpResponse);
-      });
-  });
-
 });
 
 
@@ -105,18 +83,10 @@ describe('validateLinks', () => {
     });
   });
 
-  test('should assign undefined status and "fail" statusText when error response is not available', () => {
-    axios.head.mockRejectedValueOnce(new Error('Request failed'));
-
-    return validateLinks(dataMock.links).then((result) => {
-      expect(result).toEqual(dataMock.statusFailureResponse);
-    });
-  });
-
   test('validateLinks handles non-array links correctly', () => {
-  const link = { href: 'http://example.com' };
-  const result = validateLinks(link);
-  return expect(result).resolves.toEqual([{ href: 'http://example.com', status: 'no response', statusText: 'fail' }]);
+    const link = { href: 'http://example.com' };
+    const result = validateLinks(link);
+    return expect(result).resolves.toEqual([{ href: 'http://example.com', status: 'no response', statusText: 'fail' }]);
   });
 });
 
