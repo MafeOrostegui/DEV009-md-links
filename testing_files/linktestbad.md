@@ -6,6 +6,6 @@ Este es un ejemplo de un documento Markdown que contiene enlaces.
 
 Puedes crear enlaces directos a sitios web utilizando la siguiente sintaxis:
 
-- [OpenAI](https://opefffnai.com) - Plataforma de inteligencia artificial.
-- [GitHub](https://github.com) - Plataforma de desarrollo colaborativo de software.
-- [Markdown Guide](https://www.markdownguide.org) - Guía completa de Markdown.
+- [Google](https://www.google.com) - Motor de búsqueda líder en la web.
+- [Wikipedia](https://www.wdikipedia.org) - Enciclopedia en línea de contenido libre.
+- [YouTube](https://www.youtube.com) - Plataforma de videos en línea.

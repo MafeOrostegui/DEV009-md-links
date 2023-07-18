@@ -50,8 +50,8 @@ const dataMock={
   ],
 
   statusFailureResponse: [
-    { href: 'https://example.com', text: 'Link 1', status: undefined, statusText: 'fail' },
-    { href: 'https://example.org', text: 'Link 2', status: undefined, statusText: 'fail' }
+    { href: 'https://example.com', text: 'Link 1', status: 'no response', statusText: 'fail' },
+    { href: 'https://example.org', text: 'Link 2', status: 'no response', statusText: 'fail' }
   ]
 }
 

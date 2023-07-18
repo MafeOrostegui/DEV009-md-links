@@ -20,47 +20,96 @@ function pathExists(path){
 }
 
 
-function extensionCheck(path){
-  return new Promise((resolve, reject) => {
-    const extension=pathModule.extname(path);
-    (extension !== '.md')
-    ? reject(new Error('The file is not markdown')) : resolve(path);
+function checkPathType(path){
+  return new Promise((resolve, reject)=>{
+    fs.stat(path, (err, stats)=>{
+      if(stats.isFile()){
+        resolve(path)
+      }else if(stats.isDirectory()){
+        resolve(readDirectory(path))
+      }else{
+        reject(err)
+      }
+    })
   })
 }
 
 
-function readTextFile(path,validate) {
+function readDirectory(path, arrayOfFiles=[]){
+  const files = fs.readdirSync(path);
+  files.forEach((file) => {
+    const filePath = pathModule.join(path, file),
+      stat = fs.statSync(filePath);
+
+    (stat.isDirectory())
+    ? readDirectory(filePath, arrayOfFiles)
+    : arrayOfFiles.push(filePath)
+  })
+  return arrayOfFiles
+
+}
+
+
+function extensionCheck(paths) {
   return new Promise((resolve, reject) => {
-    fs.readFile(path, 'utf-8', (err, data) => {
-      if (err) reject(err);
+    const fileArray = Array.isArray(paths) ? paths : [paths];
+    const markdownPaths = fileArray.filter(path => pathModule.extname(path) === '.md');
 
-      const links=extractLinks(path, data);
-
-      (links.length>0)
-      ? resolve(extractLinks(path, data)) : reject('No links found')
-    });
+    if (markdownPaths.length > 0) {
+      resolve(markdownPaths);
+    } else {
+      reject(new Error('No markdown files found'));
+    }
   });
 }
 
 
-function extractLinks(path, data){
-  const regex = /\[(.*?)\]\((.*?)\)/g;
-  let matches;
-  const infoLinks = [];
-  
-  while ((matches = regex.exec(data))) {
-    infoLinks.push({
-      href: matches[2],
-      text: matches[1],
-      file: path,
+function readTextFile(files, validate) {
+  const fileArray = Array.isArray(files) ? files : [files]; 
+  const promises = fileArray.map(file => {
+    return new Promise((resolve, reject) => {
+      fs.readFile(file, 'utf-8', (err, data) => {
+        if (err) {
+          reject(err);
+          return;
+        }
+        extractLinks(file, data)
+          .then((links) => resolve(links))
+          .catch((err) => {
+            resolve({file, err});
+          });
+      });
     });
-  }
-  return infoLinks;
+  });
+
+  return Promise.all(promises);
+}
+
+
+function extractLinks(path, data){
+  return new Promise((resolve, reject)=>{
+    const regex = /\[(.*?)\]\((.*?)\)/g;
+    let matches;
+    const infoLinks = [];
+      
+    while ((matches = regex.exec(data))) {
+      infoLinks.push({
+        href: matches[2],
+        text: matches[1],
+        file: path,
+      });
+    }
+  
+    (infoLinks.length>0)
+    ? resolve(infoLinks)
+    : reject('No links found'); 
+  })
 }
 
 
 function validateLinks(links) {
-  const forEachLink = links.map(link => {
+  const fileArray = Array.isArray(links) ? links : [links]; 
+  const promises = fileArray.map(link => {
     return axios.head(link.href)
       .then((response) => {     
           const httpResponse={status: response.status, statusText: response.statusText}
@@ -68,16 +117,15 @@ function validateLinks(links) {
           return link
       })
       .catch((error) => {
-        const httpResponse = { status: error.response ? error.response.status : undefined, statusText: "fail" };
+        const httpResponse = { status: error.response ? error.response.status : 'no response', statusText: "fail" };
         Object.assign(link, httpResponse);
         return link;
       });
-  });
-  
-  return Promise.all(forEachLink);
+    });   
+  return Promise.all(promises);
 }
+  
 
-
-module.exports={verifyPath, pathExists, extensionCheck, readTextFile, validateLinks}
+module.exports={verifyPath, pathExists, checkPathType, extensionCheck, readTextFile, validateLinks}
 
 

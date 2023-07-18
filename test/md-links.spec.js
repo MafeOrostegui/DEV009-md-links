@@ -38,7 +38,7 @@ describe('mdLinks', () => {
   });
 
   test('should return the links that are in the path', () => {
-    return expect(readTextFile('testing_files/linktest.md')).resolves.toEqual(
+    return expect(readTextFile('testing_files/linktest.md')).resolves.toContainEqual(
       expect.arrayContaining([
         expect.objectContaining({
           href: expect.any(String),
