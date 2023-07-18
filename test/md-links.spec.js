@@ -1,7 +1,8 @@
-const { readTextFile, validateLinks} = require('../src/data.js');
+const { readTextFile, extractLinks, validateLinks, checkPathType } = require('../src/data.js');
 const { mdLinks } = require('../src/index.js');
 const { dataMock }=require('./mockedData.js')
 const axios=require('axios');
+const fs=require('fs')
 
 jest.mock('axios');
 
@@ -39,6 +40,24 @@ describe('mdLinks', () => {
 
   test('should return the links that are in the path', () => {
     return expect(readTextFile('testing_files/linktest.md')).resolves.toContainEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          href: expect.any(String),
+          text: expect.any(String),
+          file: expect.any(String),
+        }),
+      ])
+    );
+  });
+
+  test('should ignore internal links', () => {
+    const path = 'path/to/file.md';
+    const data = '[invalid link](#)';
+    return expect(extractLinks(path, data)).rejects.toMatch("No links found");
+  });
+
+  test('should return the links that are in the path', () => {
+    return expect(mdLinks('testing_files')).resolves.toEqual(
       expect.arrayContaining([
         expect.objectContaining({
           href: expect.any(String),
@@ -93,6 +112,23 @@ describe('validateLinks', () => {
       expect(result).toEqual(dataMock.statusFailureResponse);
     });
   });
+
+  test('validateLinks handles non-array links correctly', () => {
+  const link = { href: 'http://example.com' };
+  const result = validateLinks(link);
+  return expect(result).resolves.toEqual([{ href: 'http://example.com', status: 'no response', statusText: 'fail' }]);
+  });
 });
 
 
+describe('checkPathType', () => {
+  test('should reject with an error if fs.stat returns an error', () => {
+    const error = new Error('Path not found');
+    const path = '/path/to/nonexistent/file';
+
+    jest.spyOn(fs, 'stat').mockImplementation((path, callback) => {
+      callback(error);
+    });
+    return expect(checkPathType(path)).rejects.toEqual(error);
+  });
+});

@@ -2,7 +2,6 @@ const pathModule = require('path');
 const fs= require('fs');
 const axios=require('axios');
 
-
 function verifyPath(path) {
   const absolutePath = pathModule.isAbsolute(path) 
   ? path : pathModule.resolve(path);
@@ -13,25 +12,24 @@ function verifyPath(path) {
 function pathExists(path){
   return new Promise((resolve, reject) => {
     fs.stat(path, (err) => {
-    (!err)
-    ? resolve(true) : reject('Path does not exist', err);
+    (err)
+    ? reject('Path does not exist', err) : resolve(true)
     });
   })
 }
 
 
-function checkPathType(path){
-  return new Promise((resolve, reject)=>{
-    fs.stat(path, (err, stats)=>{
-      if(stats.isFile()){
-        resolve(path)
-      }else if(stats.isDirectory()){
-        resolve(readDirectory(path))
-      }else{
-        reject(err)
+function checkPathType(path) {
+  return new Promise((resolve, reject) => {
+    fs.stat(path, (err, stats) => {
+      if (err) {
+        reject(err);
+        return;
       }
-    })
-  })
+      resolve(stats.isFile() 
+      ? path : readDirectory(path));
+    });
+  });
 }
 
 
@@ -93,11 +91,13 @@ function extractLinks(path, data){
     const infoLinks = [];
       
     while ((matches = regex.exec(data))) {
-      infoLinks.push({
-        href: matches[2],
-        text: matches[1],
-        file: path,
-      });
+      if (!matches[2].startsWith('#')) {
+        infoLinks.push({
+          href: matches[2],
+          text: matches[1],
+          file: path,
+        });
+      }
     }
   
     (infoLinks.length>0)
@@ -117,7 +117,7 @@ function validateLinks(links) {
           return link
       })
       .catch((error) => {
-        const httpResponse = { status: error.response ? error.response.status : 'no response', statusText: "fail" };
+        const httpResponse = { status: error.response ? error.response.status : 'no response', statusText: 'fail' };
         Object.assign(link, httpResponse);
         return link;
       });
@@ -126,6 +126,6 @@ function validateLinks(links) {
 }
   
 
-module.exports={verifyPath, pathExists, checkPathType, extensionCheck, readTextFile, validateLinks}
+module.exports={verifyPath, pathExists, checkPathType, extensionCheck, readDirectory, readTextFile, extractLinks, validateLinks}
 
 
