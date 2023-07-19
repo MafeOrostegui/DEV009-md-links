@@ -1,4 +1,4 @@
-const { readTextFile, extractLinks, validateLinks, checkPathType } = require('../data.js');
+const { readTextFile, validateLinks, checkPathType } = require('../data.js');
 const { mdLinks } = require('../index.js');
 const { dataMock }=require('./mockedData.js')
 const axios=require('axios');

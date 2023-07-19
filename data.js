@@ -12,7 +12,7 @@ function pathExists(path){
     (err)
     ? reject('Path does not exist', err) : resolve(true)
     });
-  })
+  });
 }
 
 function checkPathType(path) {
@@ -63,9 +63,9 @@ function readTextFile(files, validate) {
           .then((links) => resolve(links))
           .catch((err) => {resolve({file, err})})
         }
-      })
-    })
-  })
+      });
+    });
+  });
   return Promise.all(promises);
 }
 
@@ -100,8 +100,8 @@ function validateLinks(links) {
         const httpResponse = { status: error.response ? error.response.status : 'no response', statusText: 'fail' };
         Object.assign(link, httpResponse);
         return link;
-      })
-    })
+      });
+    });
   return Promise.all(promises);
 }
   
