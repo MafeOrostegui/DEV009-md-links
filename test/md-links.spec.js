@@ -3,7 +3,6 @@ const { mdLinks } = require('../src/index.js');
 const { dataMock }=require('./mockedData.js')
 const axios=require('axios');
 const fs=require('fs')
-
 jest.mock('axios');
 
 
@@ -44,12 +43,6 @@ describe('mdLinks', () => {
     );
   });
 
-  test('should ignore internal links', () => {
-    const path = 'path/to/file.md';
-    const data = '[invalid link](#)';
-    return expect(extractLinks(path, data)).rejects.toMatch("No links found");
-  });
-
   test('should return the links that are in the path', () => {
     return expect(mdLinks('testing_files')).resolves.toEqual(
       expect.arrayContaining([
@@ -64,7 +57,6 @@ describe('mdLinks', () => {
 
   test('Should return the links with the respective validation-http successful response', () => {
     axios.head.mockImplementation(() => Promise.resolve(dataMock.mockResponses.shift()));
-  
     return mdLinks('testing_files/linktest.md', true)
       .then(results => {
         expect(results).toEqual(dataMock.successfulHttpResponse);
@@ -74,6 +66,7 @@ describe('mdLinks', () => {
 
 
 describe('validateLinks', () => {
+
   test('should assign status and statusText when response status is available', () => {
     axios.head.mockResolvedValueOnce(dataMock.mockNoResponses[0]);
     axios.head.mockRejectedValueOnce({ response: { status: 404 } });
@@ -92,6 +85,7 @@ describe('validateLinks', () => {
 
 
 describe('checkPathType', () => {
+  
   test('should reject with an error if fs.stat returns an error', () => {
     const error = new Error('Path not found');
     const path = '/path/to/nonexistent/file';

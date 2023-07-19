@@ -11,13 +11,10 @@ function mdLinks(path, validate) {
         return (validate !== true)
         ? readTextFile(files)
         : readTextFile(files, true)
-          .then((links) => {
-            const validatePromises = links.map((link) => validateLinks(link));
-            return Promise.all(validatePromises)
-          });
+          .then((links) => Promise.all(links.map(link => validateLinks(link))));
       })
-      .then((validatedFiles) => {
-        resolve((validatedFiles).flat());
+      .then((finalLinks) => {
+        resolve((finalLinks).flat());
       })
       .catch(error => {
         reject(error);
@@ -25,6 +22,5 @@ function mdLinks(path, validate) {
   });
 }
 
-
-module.exports={ mdLinks }
+module.exports = { mdLinks }
 

@@ -3,11 +3,8 @@ const fs= require('fs');
 const axios=require('axios');
 
 function verifyPath(path) {
-  const absolutePath = pathModule.isAbsolute(path) 
-  ? path : pathModule.resolve(path);
-  return absolutePath;
+  return pathModule.isAbsolute(path) ? path : pathModule.resolve(path)
 }
-
 
 function pathExists(path){
   return new Promise((resolve, reject) => {
@@ -18,20 +15,17 @@ function pathExists(path){
   })
 }
 
-
 function checkPathType(path) {
   return new Promise((resolve, reject) => {
     fs.stat(path, (err, stats) => {
       if (err) {
         reject(err);
-        return;
+      }else{
+        resolve(stats.isFile() ? path : readDirectory(path));
       }
-      resolve(stats.isFile() 
-      ? path : readDirectory(path));
     });
   });
 }
-
 
 function readDirectory(path, arrayOfFiles=[]){
   const files = fs.readdirSync(path);
@@ -44,23 +38,18 @@ function readDirectory(path, arrayOfFiles=[]){
     : arrayOfFiles.push(filePath)
   })
   return arrayOfFiles
-
 }
-
 
 function extensionCheck(paths) {
   return new Promise((resolve, reject) => {
     const fileArray = Array.isArray(paths) ? paths : [paths];
     const markdownPaths = fileArray.filter(path => pathModule.extname(path) === '.md');
 
-    if (markdownPaths.length > 0) {
-      resolve(markdownPaths);
-    } else {
-      reject(new Error('No markdown files found'));
-    }
-  });
+    (markdownPaths.length > 0) 
+    ? resolve(markdownPaths)
+    : reject(new Error('No markdown files found'));
+  })
 }
-
 
 function readTextFile(files, validate) {
   const fileArray = Array.isArray(files) ? files : [files]; 
@@ -69,43 +58,31 @@ function readTextFile(files, validate) {
       fs.readFile(file, 'utf-8', (err, data) => {
         if (err) {
           reject(err);
-          return;
-        }
-        extractLinks(file, data)
+        } else {
+          extractLinks(file, data)
           .then((links) => resolve(links))
-          .catch((err) => {
-            resolve({file, err});
-          });
-      });
-    });
-  });
-
+          .catch((err) => {resolve({file, err})})
+        }
+      })
+    })
+  })
   return Promise.all(promises);
 }
 
-
-function extractLinks(path, data){
-  return new Promise((resolve, reject)=>{
-    const regex = /\[(.*?)\]\((.*?)\)/g;
-    let matches;
-    const infoLinks = [];
-      
-    while ((matches = regex.exec(data))) {
-      if (!matches[2].startsWith('#')) {
-        infoLinks.push({
-          href: matches[2],
-          text: matches[1],
-          file: path,
-        });
-      }
-    }
+function extractLinks(path, data) {
+  const regex = /\[(.*?)\]\((https?:\/\/.*?)\)/g;
+  const infoLinks = [];
   
-    (infoLinks.length>0)
-    ? resolve(infoLinks)
-    : reject('No links found'); 
-  })
+  let matches;
+  while ((matches = regex.exec(data))) {
+    const [_, text, href] = matches;
+    infoLinks.push({ href, text, file: path });
+  }
+  
+  return infoLinks.length > 0
+    ? Promise.resolve(infoLinks)
+    : Promise.reject('No links found');
 }
-
 
 function validateLinks(links) {
   const fileArray = Array.isArray(links) ? links : [links]; 
@@ -120,12 +97,11 @@ function validateLinks(links) {
         const httpResponse = { status: error.response ? error.response.status : 'no response', statusText: 'fail' };
         Object.assign(link, httpResponse);
         return link;
-      });
-    });   
+      })
+    })
   return Promise.all(promises);
 }
   
-
 module.exports={verifyPath, pathExists, checkPathType, extensionCheck, readDirectory, readTextFile, extractLinks, validateLinks}
 
 
