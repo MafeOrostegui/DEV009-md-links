@@ -1,6 +1,6 @@
 const pathModule = require('path');
-const fs= require('fs');
-const axios=require('axios');
+const fs = require('fs');
+const axios = require('axios');
 
 function verifyPath(path) {
   return pathModule.isAbsolute(path) ? path : pathModule.resolve(path)

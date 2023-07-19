@@ -1,5 +1,5 @@
 {
-  "name": "md-links",
+  "name": "mdlinks",
   "version": "0.1.0",
   "engines": {
     "node": ">=16.x"
@@ -16,15 +16,21 @@
   },
   "scripts": {
     "eslint": "eslint --ext .js src/ test/",
-    "test": "jest --verbose --coverage",
-    "start": "node src/cli.js"
+    "test": "jest --verbose --coverage"
   },
   "devDependencies": {
     "jest": "^29.6.1"
   },
   "author": "Maria Orostegui",
   "license": "ISC",
+  "bin":{
+    "mdlinks":"./cli.js"
+  },
   "dependencies": {
     "axios": "^1.4.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MafeOrostegui/DEV009-md-links"
   }
 }
