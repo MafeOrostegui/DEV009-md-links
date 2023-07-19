@@ -71,14 +71,17 @@ function readTextFile(files, validate) {
 
 function extractLinks(path, data) {
   const regex = /\[(.*?)\]\((https?:\/\/.*?)\)/g;
-  const infoLinks = [];
-  
   let matches;
-  while ((matches = regex.exec(data))) {
-    const [_, text, href] = matches;
-    infoLinks.push({ href, text, file: path });
+  const infoLinks = [];
+    
+  while ((matches = regex.exec(data))) { 
+    infoLinks.push({
+      href: matches[2],
+      text: matches[1],
+      file: path,
+    });
   }
-  
+
   return infoLinks.length > 0
     ? Promise.resolve(infoLinks)
     : Promise.reject('No links found');
