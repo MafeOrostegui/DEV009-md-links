@@ -14,8 +14,12 @@ function cli(path, options) {
       console.log(statsValidate(links));
     } else if (stats) {
       console.log(statsLinks(links));
-    } else {
+    } else if(options[3] === undefined){
       console.log('Links found:', links);
+    }else if(validate){
+      console.log('Links found:', links)
+    }else {
+      console.log('You did not enter a valid command')
     }
   }).catch(error => {
     console.error('Error', error);
