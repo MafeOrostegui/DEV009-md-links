@@ -43,7 +43,13 @@ describe('mdLinks', () => {
     );
   });
 
-  test('should return the links that are in the path', () => {
+  test('should return an empty array when the path contains no links',()=>{
+    return mdLinks('testing_files/nolinks.md').catch(links=>{
+      expect(links).toBe('No links found');
+    })
+  })
+
+  test('should return the links that are in the directory', () => {
     return expect(mdLinks('testing_files')).resolves.toEqual(
       expect.arrayContaining([
         expect.objectContaining({

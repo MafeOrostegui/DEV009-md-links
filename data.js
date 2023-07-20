@@ -51,18 +51,14 @@ function extensionCheck(paths) {
   })
 }
 
-function readTextFile(files, validate) {
+function readTextFile(files) {
   const fileArray = Array.isArray(files) ? files : [files]; 
   const promises = fileArray.map(file => {
     return new Promise((resolve, reject) => {
       fs.readFile(file, 'utf-8', (err, data) => {
-        if (err) {
-          reject(err);
-        } else {
-          extractLinks(file, data)
-          .then((links) => resolve(links))
-          .catch((err) => {resolve({file, err})})
-        }
+        (err)
+        ? reject(err)
+        : resolve(extractLinks(file, data))
       });
     });
   });
@@ -81,10 +77,7 @@ function extractLinks(path, data) {
       file: path,
     });
   }
-
-  return infoLinks.length > 0
-    ? Promise.resolve(infoLinks)
-    : Promise.reject('No links found');
+  return infoLinks
 }
 
 function validateLinks(links) {
@@ -104,7 +97,24 @@ function validateLinks(links) {
     });
   return Promise.all(promises);
 }
+
+function statsLinks(links) {
+  return {
+      'Total': links.length,
+      'Unique': new Set(links.map((link) => link.href)).size
+  }
+
+}
+
+function statsValidate(links) {
+  const broken = links.filter((link) => link.statusText === 'fail').length;
+  return {
+      'Total': links.length,
+      'Unique': new Set(links.map((link) => link.href)).size,
+      'Broken': broken,
+  }
+}
   
-module.exports={verifyPath, pathExists, checkPathType, extensionCheck, readDirectory, readTextFile, extractLinks, validateLinks}
+module.exports={verifyPath, pathExists, checkPathType, extensionCheck, readDirectory, readTextFile, extractLinks, validateLinks, statsLinks, statsValidate}
 
 

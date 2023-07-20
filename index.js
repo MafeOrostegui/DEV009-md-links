@@ -14,7 +14,8 @@ function mdLinks(path, validate) {
           .then((links) => Promise.all(links.map(link => validateLinks(link))));
       })
       .then((finalLinks) => {
-        resolve((finalLinks).flat());
+        const array=finalLinks.flat()
+        array.length === 0 ? reject('No links found') : resolve(array);
       })
       .catch(error => {
         reject(error);
