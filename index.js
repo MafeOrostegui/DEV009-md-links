@@ -1,6 +1,6 @@
 const { verifyPath, checkPathType, pathExists, extensionCheck, readTextFile, validateLinks } = require('./data');
 
-function mdLinks(path, validate) {
+function mdLinks(path, options) {
   return new Promise((resolve, reject) => {
     let absolutePath = verifyPath(path);
 
@@ -8,9 +8,9 @@ function mdLinks(path, validate) {
       .then((() => checkPathType(absolutePath)))
       .then(((files) => extensionCheck(files)))
       .then((files) => {
-        return (validate !== true)
+        return (options !== true)
         ? readTextFile(files)
-        : readTextFile(files, true)
+        : readTextFile(files)
           .then((links) => Promise.all(links.map(link => validateLinks(link))));
       })
       .then((finalLinks) => {

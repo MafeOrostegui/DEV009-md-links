@@ -6,28 +6,22 @@ const path = process.argv[2]
 const options = process.argv;
 
 function cli(path, options) {
-  let promise;
+  let validate = options.includes('--validate');
+  let stats = options.includes('--stats');
 
-  if (options.includes('--validate') && options.includes('--stats')) {
-    promise = mdLinks(path, true).then(links => {
+  const promise = mdLinks(path, validate).then(links => {
+    if (stats && validate) {
       console.log(statsValidate(links));
-    });
-  } else if (options.includes('--stats')) {
-    promise = mdLinks(path, true).then(links => {
+    } else if (stats) {
       console.log(statsLinks(links));
-    });
-  } else if (options.includes('--validate')) {
-    promise = mdLinks(path, true).then(links => {
+    } else {
       console.log('Links found:', links);
-    });
-  } else {
-    promise = mdLinks(path).then(links => {
-      console.log('Links found:', links);
-    });
-  }
-  promise.catch(error => {
+    }
+  }).catch(error => {
     console.error('Error', error);
   });
+  return promise;
 }
 
 cli(path, options);
+

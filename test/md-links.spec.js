@@ -1,4 +1,4 @@
-const { readTextFile, validateLinks, checkPathType } = require('../data.js');
+const { readTextFile, validateLinks, checkPathType, statsLinks, statsValidate } = require('../data.js');
 const { mdLinks } = require('../index.js');
 const { dataMock }=require('./mockedData.js')
 const axios=require('axios');
@@ -102,3 +102,16 @@ describe('checkPathType', () => {
     return expect(checkPathType(path)).rejects.toEqual(error);
   });
 });
+
+
+describe(('statsLinks'), () => {
+  test('should return the statistics of the links', () => {
+    expect(statsLinks(dataMock.unsucessfulHttpResponse)).toEqual(dataMock.statsLinks)
+  });
+})
+
+describe(('statsValidate'), () => {
+  test('should return the statistics of the links', () => {
+    expect(statsValidate(dataMock.unsucessfulHttpResponse)).toEqual(dataMock.statsValidate)
+  });
+})

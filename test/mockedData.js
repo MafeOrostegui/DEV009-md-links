@@ -52,7 +52,9 @@ const dataMock={
   statusFailureResponse: [
     { href: 'https://example.com', text: 'Link 1', status: 'no response', statusText: 'fail' },
     { href: 'https://example.org', text: 'Link 2', status: 'no response', statusText: 'fail' }
-  ]
+  ],
+  statsLinks: { Total: 2, Unique: 2 },
+  statsValidate: { Total: 2, Unique: 2, Broken: 1 },
 }
 
 module.exports={dataMock}

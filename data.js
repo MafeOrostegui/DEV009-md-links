@@ -114,6 +114,6 @@ function statsValidate(links) {
   }
 }
   
-module.exports={ verifyPath, pathExists, checkPathType, extensionCheck, readDirectory, readTextFile, extractLinks, validateLinks, statsLinks, statsValidate }
+module.exports = { verifyPath, pathExists, checkPathType, extensionCheck, readDirectory, readTextFile, extractLinks, validateLinks, statsLinks, statsValidate }
 
 
