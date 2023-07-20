@@ -103,7 +103,6 @@ function statsLinks(links) {
       'Total': links.length,
       'Unique': new Set(links.map((link) => link.href)).size
   }
-
 }
 
 function statsValidate(links) {
@@ -115,6 +114,6 @@ function statsValidate(links) {
   }
 }
   
-module.exports={verifyPath, pathExists, checkPathType, extensionCheck, readDirectory, readTextFile, extractLinks, validateLinks, statsLinks, statsValidate}
+module.exports={ verifyPath, pathExists, checkPathType, extensionCheck, readDirectory, readTextFile, extractLinks, validateLinks, statsLinks, statsValidate }
 
 

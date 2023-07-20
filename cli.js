@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-const {mdLinks} = require('./index.js');
-const {statsValidate, statsLinks} = require('./data.js');
+const { mdLinks } = require('./index.js');
+const { statsValidate, statsLinks } = require('./data.js');
 
 const path = process.argv[2]
 const options = process.argv;
