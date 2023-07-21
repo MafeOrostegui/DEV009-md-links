@@ -18,7 +18,7 @@ mdLinks(path, validate).then(links => {
   }else if(validate){
     console.log('Links found:', links)
   }else {
-    console.log('You did not enter a valid command. Plese use --stats or --validate')
+    console.log(`${options[3]} is an invalid option. Please use --stats or --validate`)
   }
   }).catch(error => {
     console.error('Error', error);
