@@ -16,7 +16,7 @@ describe('mdLinks', () => {
 
   test('should return an error when the path does not exist',()=>{
     return mdLinks('testing_files/linktestg.md').catch((error)=>{
-      expect(error).toBe('Path does not exist')
+      expect(error).toBe('This path does not exist, enter a valid path')
     })
   });
 
@@ -45,7 +45,7 @@ describe('mdLinks', () => {
 
   test('should return an empty array when the path contains no links',()=>{
     return mdLinks('testing_files/nolinks.md').catch(links=>{
-      expect(links).toBe('No links found');
+      expect(links).toBe('There are no links in this path, enter another one');
     })
   })
 

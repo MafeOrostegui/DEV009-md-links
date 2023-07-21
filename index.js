@@ -15,7 +15,7 @@ function mdLinks(path, options) {
       })
       .then((finalLinks) => {
         const array=finalLinks.flat()
-        array.length === 0 ? reject('No links found') : resolve(array);
+        array.length === 0 ? reject('There are no links in this path, enter another one') : resolve(array);
       })
       .catch(error => {
         reject(error);

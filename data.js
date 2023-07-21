@@ -10,7 +10,7 @@ function pathExists(path){
   return new Promise((resolve, reject) => {
     fs.stat(path, (err) => {
     (err)
-    ? reject('Path does not exist', err) : resolve(true)
+    ? reject('This path does not exist, enter a valid path', err) : resolve(true)
     });
   });
 }
@@ -47,7 +47,7 @@ function extensionCheck(paths) {
 
     (markdownPaths.length > 0) 
     ? resolve(markdownPaths)
-    : reject(new Error('No markdown files found'));
+    : reject(('No markdown files found at this path, please enter another'));
   })
 }
 

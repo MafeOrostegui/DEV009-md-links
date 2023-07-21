@@ -1,6 +1,15 @@
 #!/usr/bin/env node
 const { mdLinks } = require('./index.js');
 const { statsValidate, statsLinks } = require('./data.js');
+const gradient = require('gradient-string');
+const customColors = {
+  PinkFlamingo: gradient('#E80C7A', '#FF5C9F'),
+  AzureRadiance: gradient('#5F9EFF', '#FFBA7E'),
+  LemonDrop: gradient('#FADE5E', '#E80C7A'),
+  ElectricViolet: gradient('#FF5C9F', '#5F9EFF'),
+  PaleSpringBud: gradient('#FFBA7E', '#FADE5E'),
+};
+
 
 const path = process.argv[2]
 const options = process.argv;
@@ -10,17 +19,18 @@ let stats = options.includes('--stats');
 
 mdLinks(path, validate).then(links => {
   if (stats && validate) {
-    console.log(statsValidate(links));
+    console.log(customColors.ElectricViolet('Statistics for the validated links'), statsValidate(links));
   } else if (stats) {
-    console.log(statsLinks(links));
+    console.log(customColors.LemonDrop('Statistics for the links'), statsLinks(links));
   } else if(options[3] === undefined){
-    console.log('Links found:', links);
+    console.log('🏆 Links found:', links);
   }else if(validate){
-    console.log('Links found:', links)
+    console.log('🏆 Links found:', links)
   }else {
-    console.log(`${options[3]} is an invalid option. Please use --stats or --validate`)
+    console.log(`💥 ${customColors.PinkFlamingo(options[3])} is an invalid option. Please use ${customColors.PaleSpringBud('--stats or --validate')}`)
   }
   }).catch(error => {
-    console.error('Error', error);
+    console.error(('Error', customColors.PinkFlamingo(`💥 ${error}`)));
 });
+
 
