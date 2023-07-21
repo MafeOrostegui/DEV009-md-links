@@ -2,20 +2,18 @@
 const { mdLinks } = require('./index.js');
 const { statsValidate, statsLinks } = require('./data.js');
 const gradient = require('gradient-string');
-const customColors = {
-  PinkFlamingo: gradient('#E80C7A', '#FF5C9F'),
-  AzureRadiance: gradient('#5F9EFF', '#FFBA7E'),
-  LemonDrop: gradient('#FADE5E', '#E80C7A'),
-  ElectricViolet: gradient('#FF5C9F', '#5F9EFF'),
-  PaleSpringBud: gradient('#FFBA7E', '#FADE5E'),
-};
-
-
 const path = process.argv[2]
 const options = process.argv;
 
 let validate = options.includes('--validate');
 let stats = options.includes('--stats');
+
+const customColors = {
+  PinkFlamingo: gradient('#E80C7A', '#FF5C9F'),
+  LemonDrop: gradient('#FADE5E', '#E80C7A'),
+  ElectricViolet: gradient('#FF5C9F', '#5F9EFF'),
+  PaleSpringBud: gradient('#FFBA7E', '#FADE5E'),
+};
 
 mdLinks(path, validate).then(links => {
   if (stats && validate) {

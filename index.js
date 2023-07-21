@@ -2,8 +2,9 @@ const { verifyPath, checkPathType, pathExists, extensionCheck, readTextFile, val
 
 function mdLinks(path, options) {
   return new Promise((resolve, reject) => {
+    if (!path || typeof path !== 'string') reject('You should enter a path valid. \nPlease enter to a path to a file or a folder');
+  
     let absolutePath = verifyPath(path);
-
     pathExists(absolutePath)
       .then((() => checkPathType(absolutePath)))
       .then(((files) => extensionCheck(files)))

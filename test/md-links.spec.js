@@ -8,6 +8,12 @@ jest.mock('axios');
 
 describe('mdLinks', () => {
 
+  test('should reject with an error message when path is null or not a string', () => {
+    return mdLinks(null).catch((error) => {
+      expect(error).toBe('You should enter a path valid. \nPlease enter to a path to a file or a folder');
+    });
+  })
+
   test('should return the same path when the path is absolute', ()=>{
     return mdLinks('/Users/lukasarias/Documents/Laboratoria/proyecto 3/DEV009-md-links/testing_files/linktest.md').then((data)=>{
       expect(data).toBeTruthy()
