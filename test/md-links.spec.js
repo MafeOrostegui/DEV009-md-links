@@ -106,7 +106,7 @@ describe('checkPathType', () => {
 
 describe(('statsLinks'), () => {
   test('should return the statistics of the links', () => {
-    expect(statsLinks(dataMock.unsucessfulHttpResponse)).toEqual(dataMock.statsLinks)
+    expect(statsLinks(dataMock.links)).toEqual(dataMock.statsLinks)
   });
 })
 
