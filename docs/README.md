@@ -39,16 +39,11 @@ Para instalar la API mdLinks, el usuario debe seguir los siguientes pasos:
 
 1. Abrir una terminal o línea de comandos en el proyecto donde se desea utilizar la API.
 
-2. Ejecutar el siguiente comando de npm para realizar la instalación desde GitHub:
+2. Ejecutar el siguiente comando de npm para realizar la instalación desde npm:
 
 ```bash
-npm install MafeOrostegui/DEV009-md-links
+npm i mdlinks-mafeorostegui
 ```
-
-3. npm descargará automáticamente el paquete desde el repositorio `https://github.com/MafeOrostegui/DEV009-md-links` y lo instalará en el proyecto.
-
-Una vez instalada la mdLinks API, el usuario podrá utilizarla para buscar enlaces en archivos Markdown, validar el estado de cada enlace y obtener estadísticas sobre la cantidad de enlaces presentes en los archivos.
-
 
 ## 3. Uso básico
 
