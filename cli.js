@@ -17,9 +17,9 @@ const customColors = {
 
 mdLinks(path, validate).then(links => {
   if (stats && validate) {
-    console.log(customColors.ElectricViolet('Statistics for the validated links'), statsValidate(links));
+    console.log(customColors.ElectricViolet(`Statistics for verified links in ${options[2]}`), statsValidate(links));
   } else if (stats) {
-    console.log(customColors.LemonDrop('Statistics for the links'), statsLinks(links));
+    console.log(customColors.LemonDrop(`Statistics for links in ${options[2]}`), statsLinks(links));
   } else if(options[3] === undefined){
     console.log('🏆 Links found:', links);
   }else if(validate){

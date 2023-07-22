@@ -50,7 +50,7 @@ describe('mdLinks', () => {
   });
 
   test('should return an empty array when the path contains no links',()=>{
-    return mdLinks('testing_files/nolinks.md').catch(links=>{
+    return mdLinks('testing_files/nolinks.md').catch(links => { 
       expect(links).toBe('There are no links in this path, enter another one');
     })
   })

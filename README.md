@@ -1,673 +1,249 @@
-# Markdown Links
+<p align="center">
+  <img src="mdlinks.png" width="400px" alt="logo">
+</p>
 
-## Índice
+## Descripción
 
-* [1. Preámbulo](#1-preámbulo)
-* [2. Resumen del proyecto](#2-resumen-del-proyecto)
-* [3. Objetivos de aprendizaje](#3-objetivos-de-aprendizaje)
-* [4. Consideraciones generales](#4-consideraciones-generales)
-* [5. Criterios de aceptación mínimos del proyecto](#5-criterios-de-aceptación-mínimos-del-proyecto)
-* [6. Entregables](#6-entregables)
-* [7. Hacker edition](#7-hacker-edition)
-* [8. Pistas, tips y lecturas complementarias](#8-pistas-tips-y-lecturas-complementarias)
-* [9. Checklist](#9-checklist)
-* [10. Achicando el problema](#10-achicando-el-problema)
+* [1. Introducción](#1-introducción)
+* [2. Instalación](#2-instalación)
+* [3. Uso básico](#3-uso-básico)
+* [4. Opciones avanzadas](#4-opciones-avanzadas)
+* [5. Arquitectura y tecnologías](#5-arquitectura-y-tecnologías)
+* [6. Proceso de desarrollo](#6-proceso-de-desarrollo)
+* [7. Contactos y enlaces](#7-contactos-y-enlaces)
 
 ***
 
-## 1. Preámbulo
+## 1. Introducción
 
-[Markdown](https://es.wikipedia.org/wiki/Markdown) es un lenguaje de marcado
-ligero muy popular entre developers. Es usado en muchísimas plataformas que
-manejan texto plano (GitHub, foros, blogs, ...) y es muy común
-encontrar varios archivos en ese formato en cualquier tipo de repositorio
-(empezando por el tradicional `README.md`).
+mdLinks es una API desarrollada en **node.js** para buscar y extraer enlaces dentro de archivos Markdown (.md) y proporcionar diversas opciones para que los usuarios puedan trabajar con ellos de manera efectiva. Los archivos Markdown son comúnmente utilizados para la creación de documentos que incluyen enlaces a otros recursos, y con esta herramienta, el proceso de extracción y manipulación de enlaces se vuelve más sencillo y eficiente.
 
-Estos archivos `Markdown` normalmente contienen _links_ (vínculos/ligas) que
-muchas veces están rotos o ya no son válidos y eso perjudica mucho el valor de
-la información que se quiere compartir.
+### Características principales
 
-Dentro de una comunidad de código abierto, nos han propuesto crear una
-herramienta usando [Node.js](https://nodejs.org/), que lea y analice archivos
-en formato `Markdown`, para verificar los links que contengan y reportar
-algunas estadísticas.
+La API mdLinks ofrece varias funcionalidades esenciales para el manejo de enlaces en archivos Markdown:
 
-![md-links](https://user-images.githubusercontent.com/110297/42118443-b7a5f1f0-7bc8-11e8-96ad-9cc5593715a6.jpg)
+1. **Búsqueda de enlaces:** mdLinks escanea de manera inteligente los archivos Markdown y recopila todos los enlaces encontrados, proporcionando una lista completa.
 
-## 2. Resumen del proyecto
+2. **Validación de estado:** Con mdLinks, puedes verificar el estado de cada enlace encontrado. Esto significa que la API realiza solicitudes HTTP para comprobar si los enlaces siguen activos y si existen problemas de conectividad.
 
-En este proyecto crearás una herramienta de línea de comando (CLI) así como tu
-propia librería (o biblioteca - library) en JavaScript.
+3. **Estadísticas de enlaces:** Además de encontrar y validar enlaces, mdLinks proporciona estadísticas precisas sobre la cantidad de enlaces totales presentes.
 
-En esta oportunidad nos alejamos un poco del navegador para construir un
-programa que se ejecute usando Node.js. Aprenderemos sobre procesos
-(`process.env`, `process.argv`, ...), cómo interactuar con el sistema archivos,
-cómo hacer consultas de red, etc.
+4. **Lectura de directorios:** mdLinks tiene la capacidad de leer directorios, lo que permite encontrar y analizar archivos Markdown en múltiples ubicaciones. Esto facilita el procesamiento de grandes cantidades de archivos y la gestión eficiente de enlaces en proyectos complejos.
 
-[Node.js](https://nodejs.org/es/) es un entorno de ejecución para JavaScript
-construido con el [motor de JavaScript V8 de Chrome](https://developers.google.com/v8/).
-Esto nos va a permitir ejecutar JavaScript en el entorno del sistema operativo,
-ya sea tu máquina o un servidor, lo cual nos abre las puertas para poder
-interactuar con el sistema en sí, archivos, redes, etc.
+5. **Facilidad de uso:** La API se presenta con una interfaz sencilla y fácil de utilizar. Con comandos simples, los usuarios pueden obtener rápidamente los resultados deseados sin complicaciones innecesarias.
 
-Diseñar tu propia librería es una experiencia fundamental para cualquier
-desarrolladora porque que te obliga a pensar en la interfaz (API) de tus
-_módulos_ y cómo será usado por otras developers. Debes tener especial
-consideración en peculiaridades del lenguaje, convenciones y buenas prácticas.
 
-## 3. Objetivos de aprendizaje
+## 2. Instalación
 
-Reflexiona y luego marca los objetivos que has llegado a entender y aplicar en tu proyecto. Piensa en eso al decidir tu estrategia de trabajo.
+Para instalar la API mdLinks, el usuario debe seguir los siguientes pasos:
 
-### JavaScript
+1. Abrir una terminal o línea de comandos en el proyecto donde se desea utilizar la API.
 
-- [ ] **Diferenciar entre tipos de datos primitivos y no primitivos**
+2. Ejecutar el siguiente comando de npm para realizar la instalación desde GitHub:
 
-- [ ] **Arrays (arreglos)**
-
-  <details><summary>Links</summary><p>
-
-  * [Arreglos](https://curriculum.laboratoria.la/es/topics/javascript/04-arrays)
-  * [Array - MDN](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Array/)
-  * [Array.prototype.sort() - MDN](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Array/sort)
-  * [Array.prototype.forEach() - MDN](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach)
-  * [Array.prototype.map() - MDN](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Array/map)
-  * [Array.prototype.filter() - MDN](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Array/filter)
-  * [Array.prototype.reduce() - MDN](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce)
-</p></details>
-
-- [ ] **Objetos (key, value)**
-
-  <details><summary>Links</summary><p>
-
-  * [Objetos en JavaScript](https://curriculum.laboratoria.la/es/topics/javascript/05-objects/01-objects)
-</p></details>
-
-- [ ] **Uso de condicionales (if-else, switch, operador ternario, lógica booleana)**
-
-  <details><summary>Links</summary><p>
-
-  * [Estructuras condicionales y repetitivas](https://curriculum.laboratoria.la/es/topics/javascript/02-flow-control/01-conditionals-and-loops)
-  * [Tomando decisiones en tu código — condicionales - MDN](https://developer.mozilla.org/es/docs/Learn/JavaScript/Building_blocks/conditionals)
-</p></details>
-
-- [ ] **Funciones (params, args, return)**
-
-  <details><summary>Links</summary><p>
-
-  * [Funciones (control de flujo)](https://curriculum.laboratoria.la/es/topics/javascript/02-flow-control/03-functions)
-  * [Funciones clásicas](https://curriculum.laboratoria.la/es/topics/javascript/03-functions/01-classic)
-  * [Arrow Functions](https://curriculum.laboratoria.la/es/topics/javascript/03-functions/02-arrow)
-  * [Funciones — bloques de código reutilizables - MDN](https://developer.mozilla.org/es/docs/Learn/JavaScript/Building_blocks/Functions)
-</p></details>
-
-- [ ] **Recursión o recursividad**
-
-  <details><summary>Links</summary><p>
-
-  * [Píldora recursión - YouTube Laboratoria Developers](https://www.youtube.com/watch?v=lPPgY3HLlhQ)
-  * [Recursión o Recursividad - Laboratoria Developers en Medium](https://medium.com/laboratoria-developers/recursi%C3%B3n-o-recursividad-ec8f1a359727)
-</p></details>
-
-- [ ] **Módulos de CommonJS**
-
-  <details><summary>Links</summary><p>
-
-  * [Modules: CommonJS modules - Node.js Docs](https://nodejs.org/docs/latest/api/modules.html)
-</p></details>
-
-- [ ] **Diferenciar entre expresiones (expressions) y sentencias (statements)**
-
-- [ ] **Callbacks**
-
-  <details><summary>Links</summary><p>
-
-  * [Función Callback - MDN](https://developer.mozilla.org/es/docs/Glossary/Callback_function)
-</p></details>
-
-- [ ] **Promesas**
-
-  <details><summary>Links</summary><p>
-
-  * [Promise - MDN](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Promise)
-  * [How to Write a JavaScript Promise - freecodecamp (en inglés)](https://www.freecodecamp.org/news/how-to-write-a-javascript-promise-4ed8d44292b8/)
-</p></details>
-
-- [ ] **Pruebas unitarias (unit tests)**
-
-  <details><summary>Links</summary><p>
-
-  * [Empezando con Jest - Documentación oficial](https://jestjs.io/docs/es-ES/getting-started)
-</p></details>
-
-- [ ] **Pruebas asíncronas**
-
-  <details><summary>Links</summary><p>
-
-  * [Tests de código asincrónico con Jest - Documentación oficial](https://jestjs.io/docs/es-ES/asynchronous)
-</p></details>
-
-- [ ] **Uso de mocks y espías**
-
-  <details><summary>Links</summary><p>
-
-  * [Manual Mocks con Jest - Documentación oficial](https://jestjs.io/docs/es-ES/manual-mocks)
-</p></details>
-
-- [ ] **Pruebas de compatibilidad en múltiples entornos de ejecución**
-
-- [ ] **Uso de linter (ESLINT)**
-
-- [ ] **Uso de identificadores descriptivos (Nomenclatura y Semántica)**
-
-### Node.js
-
-- [ ] **Instalar y usar módulos con npm**
-
-  <details><summary>Links</summary><p>
-
-  * [Sitio oficial de npm (en inglés)](https://www.npmjs.com/)
-</p></details>
-
-- [ ] **Configuración de package.json**
-
-  <details><summary>Links</summary><p>
-
-  * [package.json - Documentación oficial (en inglés)](https://docs.npmjs.com/files/package.json)
-</p></details>
-
-- [ ] **Configuración de npm-scripts**
-
-  <details><summary>Links</summary><p>
-
-  * [scripts - Documentación oficial (en inglés)](https://docs.npmjs.com/misc/scripts)
-</p></details>
-
-- [ ] **process (env, argv, stdin-stdout-stderr, exit-code)**
-
-  <details><summary>Links</summary><p>
-
-  * [Process - Documentación oficial (en inglés)](https://nodejs.org/api/process.html)
-</p></details>
-
-- [ ] **File system (fs, path)**
-
-  <details><summary>Links</summary><p>
-
-  * [File system - Documentación oficial (en inglés)](https://nodejs.org/api/fs.html)
-  * [Path - Documentación oficial (en inglés)](https://nodejs.org/api/path.html)
-</p></details>
-
-### Control de Versiones (Git y GitHub)
-
-- [ ] **Git: Instalación y configuración**
-
-- [ ] **Git: Control de versiones con git (init, clone, add, commit, status, push, pull, remote)**
-
-- [ ] **Git: Integración de cambios entre ramas (branch, checkout, fetch, merge, reset, rebase, tag)**
-
-- [ ] **GitHub: Creación de cuenta y repos, configuración de llaves SSH**
-
-- [ ] **GitHub: Colaboración en Github (branches | forks | pull requests | code review | tags)**
-
-- [ ] **GitHub: Organización en Github (projects | issues | labels | milestones | releases)**
-
-### HTTP
-
-- [ ] **Consulta o petición (request) y respuesta (response).**
-
-  <details><summary>Links</summary><p>
-
-  * [Generalidades del protocolo HTTP - MDN](https://developer.mozilla.org/es/docs/Web/HTTP/Overview)
-  * [Mensajes HTTP - MDN](https://developer.mozilla.org/es/docs/Web/HTTP/Messages)
-</p></details>
-
-- [ ] **Códigos de status de HTTP**
-
-  <details><summary>Links</summary><p>
-
-  * [Códigos de estado de respuesta HTTP - MDN](https://developer.mozilla.org/es/docs/Web/HTTP/Status)
-  * [The Complete Guide to Status Codes for Meaningful ReST APIs - dev.to](https://dev.to/khaosdoctor/the-complete-guide-to-status-codes-for-meaningful-rest-apis-1-5c5)
-</p></details>
-
-## 4. Consideraciones generales
-
-* Este proyecto se debe "resolver" de manera individual.
-
-* El rango de tiempo estimado para completar el proyecto es de 4 a 5 Sprints.
-
-* La **librería** y el **script ejecutable** (herramienta de línea de comando -
-  CLI) deben estar implementados en JavaScript para ser ejecutados con
-  Node.js. **Está permitido usar librerías externas**.
-
-* Tu módulo **debe ser instalable** via `npm install <github-user>/md-links`. Este
-  módulo debe incluir tanto un _ejecutable_ que podamos invocar en la línea de
-  comando como una interfaz que podamos importar con `require` para usarlo
-  programáticamente.
-
-* Los **tests unitarios** deben cubrir un mínimo del 70% de _statements_,
-  _functions_, _lines_ y _branches_. Te recomendamos explorar [Jest](https://jestjs.io/)
-  para tus pruebas unitarias.
-
-* Para este proyecto **no está permitido** utilizar `async/await`.
-
-* Para este proyecto te sugerimos **no utilizar** la versión síncrona
-  de la función para leer archivos, `readFileSync`, y en cambio intentar
-  resolver este desafío de manera asíncrona.
-
-* Para este proyecto es **opcional** el uso de ES Modules `(import/export)`, en el
-  caso optes utilizarlo deberás de crear un script de `build` en el `package.json`
-  que los transforme en `requires` y `module.exports` con ayuda de **babel**.
-
-* Para disminuir la complejidad de tu algoritmo recursivo, te recomendamos
-  utilizar la versión síncrona de la función para leer directorios, `readdirSync`.
-
-## 5. Criterios de aceptación mínimos del proyecto
-
-Para comenzar este proyecto tendrás que hacer un **_fork_** y **_clonar_** este
-repositorio.
-
-Antes de comenzar a codear, es necesario crear un **plan de acción**. Esto debería
-quedar detallado en el `README.md` de tu repo y en una serie de **_issues_**
-y **_milestones_** para priorizar y organizar el trabajo, y para poder hacer
-seguimiento de tu progreso.
-
-Dentro de cada **_milestone_** se crearán y asignarán los **_issues_** que cada quien
-considere necesarios.
-
-### Archivos del proyecto
-
-* `README.md` con descripción del módulo, instrucciones de instalación/uso,
-  documentación del API y ejemplos. Todo lo relevante para que cualquier
-  developer que quiera usar tu librería pueda hacerlo sin inconvenientes.
-* `index.js`: Desde este archivo debes exportar **una** función (`mdLinks`).
-* `package.json` con nombre, versión, descripción, autores, licencia,
-  dependencias, scripts (pretest, test, ...), main, bin
-* `.editorconfig` con configuración para editores de texto. Este archivo no se
-  debe cambiar.
-* `.eslintrc` con configuración para linter. Este archivo contiene una
-  configuración básica para ESLint, si deseas agregar reglas adicionales
-  como Airbnb deberás modificar este archivo.
-* `.gitignore` para ignorar `node_modules` u otras carpetas que no deban
-  incluirse en control de versiones (`git`).
-* `test/md-links.spec.js` debe contener los tests unitarios para la función
-  `mdLinks()`. Tu implementación debe pasar estos tests.
-
-## Este proyecto consta de DOS partes
-
-### 1) JavaScript API
-
-El módulo debe poder **importarse** en otros scripts de Node.js y debe ofrecer la
-siguiente interfaz:
-
-#### `mdLinks(path, options)`
-
-##### Argumentos
-
-* `path`: Ruta **absoluta** o **relativa** al **archivo** o **directorio**.
-Si la ruta pasada es relativa, debe resolverse como relativa al directorio
-desde donde se invoca node - _current working directory_).
-* `options`: Un objeto con **únicamente** la siguiente propiedad:
-  - `validate`: Booleano que determina si se desea validar los links
-    encontrados.
-
-##### Valor de retorno
-
-La función debe **retornar una promesa** (`Promise`) que **resuelva a un arreglo**
-(`Array`) de objetos (`Object`), donde cada objeto representa un link y contiene
-las siguientes propiedades
-
-Con `validate:false` :
-
-* `href`: URL encontrada.
-* `text`: Texto que aparecía dentro del link (`<a>`).
-* `file`: Ruta del archivo donde se encontró el link.
-
-Con `validate:true` :
-
-* `href`: URL encontrada.
-* `text`: Texto que aparecía dentro del link (`<a>`).
-* `file`: Ruta del archivo donde se encontró el link.
-* `status`: Código de respuesta HTTP.
-* `ok`: Mensaje `fail` en caso de fallo u `ok` en caso de éxito.
-
-#### Ejemplo (resultados como comentarios)
-
-```js
-const mdLinks = require("md-links");
-
-mdLinks("./some/example.md")
-  .then(links => {
-    // => [{ href, text, file }, ...]
-  })
-  .catch(console.error);
-
-mdLinks("./some/example.md", { validate: true })
-  .then(links => {
-    // => [{ href, text, file, status, ok }, ...]
-  })
-  .catch(console.error);
-
-mdLinks("./some/dir")
-  .then(links => {
-    // => [{ href, text, file }, ...]
-  })
-  .catch(console.error);
+```bash
+npm install MafeOrostegui/DEV009-md-links
 ```
 
-### 2) CLI (Command Line Interface - Interfaz de Línea de Comando)
+3. npm descargará automáticamente el paquete desde el repositorio `https://github.com/MafeOrostegui/DEV009-md-links` y lo instalará en el proyecto.
 
-El ejecutable de nuestra aplicación debe poder ejecutarse de la siguiente
-manera a través de la **terminal**:
+Una vez instalada la mdLinks API, el usuario podrá utilizarla para buscar enlaces en archivos Markdown, validar el estado de cada enlace y obtener estadísticas sobre la cantidad de enlaces presentes en los archivos.
 
-`md-links <path-to-file> [options]`
 
-Por ejemplo:
+## 3. Uso básico
 
-```sh
-$ md-links ./some/example.md
-./some/example.md http://algo.com/2/3/ Link a algo
-./some/example.md https://otra-cosa.net/algun-doc.html algún doc
-./some/example.md http://google.com/ Google
+El uso básico de la API `mdLinks` es sencillo y se realiza ejecutando el siguiente comando en la terminal:
+
+```bash
+mdlinks linktest.md
 ```
 
-El comportamiento por defecto no debe validar si las URLs responden ok o no,
-solo debe identificar el archivo markdown (a partir de la ruta que recibe como
-argumento), analizar el archivo Markdown e imprimir los links que vaya
-encontrando, junto con la ruta del archivo donde aparece y el texto
-que hay dentro del link (truncado a 50 caracteres).
+Donde `linktest.md` es el nombre del archivo que se desea evaluar. Al ejecutar este comando, la API buscará los enlaces presentes en el archivo *markdown* y mostrará en la consola cada uno de ellos, junto con el texto que los acompaña y la ruta de su ubicación. De esta manera, el usuario obtendrá una visión detallada de los enlaces contenidos en el archivo analizado:
 
-#### Options
+```bash
+🏆 Links found: [
+  {
+    href: 'https://openai.com',
+    text: 'OpenAI',
+    file: '/Users/Documents/linktest.md'
+  },
+  {
+    href: 'https://github.com',
+    text: 'GitHub',
+    file: '/Users/Documents/linktest.md'
+  }
+]
 
-##### `--validate`
+```
+Además, la versatilidad de la API permite realizar búsquedas en carpetas, lo cual resulta especialmente útil para analizar múltiples archivos markdown a la vez. Al emplear el siguiente comando:
 
-Si pasamos la opción `--validate`, el módulo debe hacer una petición HTTP para
-averiguar si el link funciona o no. Si el link resulta en una redirección a una
-URL que responde ok, entonces consideraremos el link como ok.
+```bash
+mdlinks carpeta_ejemplo
+```
+La API recorrerá la carpeta especificada, examinando cada archivo markdown presente en ella y extrayendo sus enlaces. A continuación, se muestra un ejemplo del resultado de esta búsqueda:
 
-Por ejemplo:
+```bash
+🏆 Links found: [
+  {
+    href: 'https://www.google.com',
+    text: 'Google',
+    file: '/Users/Documents/carpeta_ejemplo/file1.md'
+  },
+  {
+    href: 'https://www.wikipedia.org',
+    text: 'Wikipedia',
+    file: '/Users/Documents/carpeta_ejemplo/file2.md'
+  }
+]
+```
+En este ejemplo, la API ha encontrado tres enlaces en dos archivos markdown diferentes dentro de la carpeta carpeta_ejemplo. Para cada enlace, se muestran detalles como la URL (href), el texto del enlace (text) y la ruta completa del archivo donde se encuentra el enlace (file). Esta información permite al usuario identificar rápidamente los enlaces y conocer su ubicación en los archivos, facilitando cualquier acción o análisis necesario.
 
-```sh
-$ md-links ./some/example.md --validate
-./some/example.md http://algo.com/2/3/ ok 200 Link a algo
-./some/example.md https://otra-cosa.net/algun-doc.html fail 404 algún doc
-./some/example.md http://google.com/ ok 301 Google
+Si el archivo o carpeta especificada no existe o el path es incorrecto, la API mostrará un mensaje de error indicando la razón del fallo, lo que ayuda al usuario a corregir posibles errores en los comandos de ejecución. Los mensajes de error serían similares a los siguientes:
+
+- Ejemplo 1:
+
+```bash
+💥 This path does not exist, enter a valid path
+```
+- Ejemplo 2:
+```bash
+💥 You should enter a path valid. 
+Please enter to a path to a file or a folder
+```
+En caso de que no se encuentren enlaces en el archivo markdown o no haya ningún archivo markdown dentro de la carpeta especificada, la API mostrará el siguiente mensaje:
+
+- Ejemplo 1:
+
+```bash
+💥 There are no links in this path, enter another one
 ```
 
-Vemos que el _output_ en este caso incluye la palabra `ok` o `fail` después de
-la URL, así como el status de la respuesta recibida a la petición HTTP a dicha
-URL.
+- Ejemplo 2:
+```bash
+💥 No markdown files found at this path, please enter another
+```
+De esta manera, la API proporciona información útil sobre los enlaces encontrados y también maneja de forma adecuada las situaciones de error, garantizando una experiencia de uso más amigable y esclarecedora para el usuario.
 
-##### `--stats`
 
-Si pasamos la opción `--stats` el output (salida) será un texto con estadísticas
-básicas sobre los links.
+## 4. Opciones avanzadas
 
-```sh
-$ md-links ./some/example.md --stats
-Total: 3
-Unique: 3
+La API `mdLinks` ofrece opciones avanzadas que permiten al usuario realizar acciones adicionales durante la búsqueda y validación de enlaces en archivos markdown. Estas opciones se pueden especificar al ejecutar el comando en la terminal.
+
+A continuación se describen las opciones disponibles y cómo el usuario puede utilizarlas:
+
+### Opción `--validate`
+
+La opción `--validate` permite validar el estado de los enlaces encontrados en el archivo markdown. Para utilizar esta opción, el usuario debe ejecutar el siguiente comando:
+
+```bash
+mdlinks example.md --validate
 ```
 
-También podemos combinar `--stats` y `--validate` para obtener estadísticas que
-necesiten de los resultados de la validación.
+Al utilizar la opción `--validate`, la API recorrerá el archivo `example.md`, buscará los enlaces presentes y, además, verificará la disponibilidad de cada enlace en línea. La consola mostrará detalles sobre cada enlace, incluyendo la URL, el texto asociado, la ruta del archivo y su estado (activo o roto):
 
-```sh
-$ md-links ./some/example.md --stats --validate
-Total: 3
-Unique: 3
-Broken: 1
+```bash
+🏆 Links found: [
+  {
+    href: 'https://openai.com',
+    text: 'OpenAI',
+    file: '/Users/Documents/linktest.md',
+    status: 403,
+    statusText: 'fail',
+  },
+  {
+    href: 'https://github.com',
+    text: 'GitHub',
+    file: '/Users/Documents/linktest.md'
+    status: 200,
+    statusText: 'OK',
+  }
+]
 ```
 
-## 6. Entregables
-
-Módulo instalable via `npm install <github-user>/md-links`. Este módulo debe
-incluir tanto **un ejecutable** como **una interfaz** que podamos importar con `require`
-para usarlo programáticamente.
+### Opción `--stats`
 
-## 7. Hacker edition
+La opción `--stats` permite obtener estadísticas sobre los enlaces encontrados en el archivo markdown, sin realizar la validación de su estado. Para utilizar esta opción, el usuario debe ejecutar el siguiente comando:
 
-Las secciones llamadas _Hacker Edition_ son **opcionales**. Si **terminaste**
-con todo lo anterior y te queda tiempo, intenta completarlas. Así podrás
-profundizar y/o ejercitar más sobre los objetivos de aprendizaje del proyecto.
+```bash
+mdlinks example.md --stats
+```
 
-* Puedes agregar la propiedad `line` a cada objeto `link` indicando en qué línea
-  del archivo se encontró el link.
-* Puedes agregar más estadísticas.
-* Integración continua con Travis o Circle CI.
+Al utilizar la opción `--stats`, la API recorrerá el archivo `example.md`, buscará los enlaces presentes y mostrará en la consola información estadística sobre ellos. Esta información incluye la cantidad total de enlaces encontrados y la cantidad de enlaces únicos, es decir, aquellos que no se repiten en el archivo:
 
-***
+```bash
+Statistics for links in example.md { Total: 2, Unique: 2 }
+```
 
-## 8. Pistas, tips y lecturas complementarias
+### Opciones `--stats` y `--validate` juntas
 
-Súmate al canal de Slack
-[#project-md-links](https://claseslaboratoria.slack.com/archives/C03T1E5TJCQ)
-para conversar y pedir ayuda del proyecto.
+El usuario también puede combinar las opciones `--stats` y `--validate` para obtener estadísticas detalladas que incluyan la validación del estado de los enlaces. Para utilizar ambas opciones, el usuario debe ejecutar el siguiente comando:
 
-### FAQs
+```bash
+mdlinks example.md --stats --validate
+```
 
-#### ¿Cómo hago para que mi módulo sea _instalable_ desde GitHub?
+Al combinar estas opciones, la API realizará la búsqueda de enlaces, mostrará las estadísticas totales y de enlaces únicos, y además, validará cada enlace en línea, proporcionando información sobre su estado (activo o roto):
 
-Para que el módulo sea instalable desde GitHub solo tiene que:
+```bash
+Statistics for verified links in example.md { Total: 2, Unique: 2, Broken: 1 }
+```
 
-* Estar en un repo público de GitHub
-* Contener un `package.json` válido
+Estas opciones avanzadas brindan al usuario una mayor flexibilidad y control al utilizar la API `mdLinks`.
 
-Con el comando `npm install githubname/reponame` podemos instalar directamente
-desde GitHub. Ver [docs oficiales de `npm install` acá](https://docs.npmjs.com/cli/install).
+## 5. Arquitectura y Tecnologías
 
-Por ejemplo, el [`course-parser`](https://github.com/Laboratoria/course-parser)
-que usamos para la currícula no está publicado en el registro público de NPM,
-así que lo instalamos directamente desde GitHub con el comando `npm install
-Laboratoria/course-parser`.
+La API `mdLinks` está construida en Node.js, aprovechando su enfoque asíncrono y su capacidad para trabajar con el sistema de archivos. Esta elección permite una gestión eficiente de lectura y búsqueda en archivos markdown, así como la extracción de enlaces.
 
-### Sugerencias de implementación
+### Tecnologías utilizadas:
 
-La implementación de este proyecto tiene varias partes: leer del sistema de
-archivos, recibir argumentos a través de la línea de comando, analizar texto,
-hacer consultas HTTP, ... y todas estas cosas pueden enfocarse de muchas formas,
-tanto usando librerías como implementando en VanillaJS.
+A continuación, se detallan las principales tecnologías que forman parte de la API `mdLinks`:
 
-Por poner un ejemplo, el _parseado_ (análisis) del markdown para extraer los
-links podría plantearse de las siguientes maneras (todas válidas):
+1. **Node.js:** Es un entorno de tiempo de ejecución de JavaScript que permite ejecutar código JavaScript en el servidor y utilizar módulos y paquetes para ampliar la funcionalidad de la aplicación.
 
-* Usando un _módulo_ como [markdown-it](https://github.com/markdown-it/markdown-it),
-  que nos devuelve un arreglo de _tokens_ que podemos recorrer para identificar
-  los links.
-* Siguiendo otro camino completamente, podríamos usar
-  [expresiones regulares (`RegExp`)](https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Regular_Expressions).
-* También podríamos usar una combinación de varios _módulos_ (podría ser válido
-  transformar el markdown a HTML usando algo como [marked](https://github.com/markedjs/marked)
-  y de ahí extraer los link con una librería de DOM como [JSDOM](https://github.com/jsdom/jsdom)
-  o [Cheerio](https://github.com/cheeriojs/cheerio) entre otras).
-* Usando un _custom renderer_ de [marked](https://github.com/markedjs/marked)
-  (`new marked.Renderer()`).
+2. **JavaScript:** Lenguaje de programación ampliamente utilizado en el desarrollo web, que proporciona la lógica y funcionalidad principal de la API.
 
-No dudes en consultar a tus compañeras y coaches
-si tienes dudas existenciales con respecto a estas decisiones. No existe una
-"única" manera correcta :wink:
+3. **File System (fs) Module:** Un módulo de Node.js que proporciona una API para interactuar con el sistema de archivos, permitiendo leer y escribir archivos.
 
-### Tutoriales / NodeSchool workshoppers
+4. **Path Module:** Otro módulo de Node.js que proporciona utilidades para trabajar con rutas de archivos y directorios. Se utiliza para obtener rutas absolutas y relativas, así como para manipular las rutas de los archivos analizados.
 
-* [learnyounode](https://github.com/workshopper/learnyounode)
-  Considera los primeros puntos para conocer más de Node.js, y cuales
-  son pertinentes a este proyecto, no es necesario hacer todos los pasos.
-* [how-to-npm](https://github.com/workshopper/how-to-npm)
-* [promise-it-wont-hurt](https://github.com/stevekane/promise-it-wont-hurt)
+5. **axios:** Una librería JavaScript basada en promesas que se utiliza para realizar solicitudes HTTP, lo que permite validar los enlaces encontrados en los archivos markdown.
 
-### Otros recursos
+6. **Jest:** Jest es un popular framework de pruebas para JavaScript que se utilizó para implementar las pruebas unitarias de la API. Proporciona un entorno de pruebas completo y eficiente, permitiendo realizar pruebas de forma rápida y sencilla.
 
-* [Acerca de Node.js - Documentación oficial](https://nodejs.org/es/about/)
-* [Node.js file system - Documentación oficial](https://nodejs.org/api/fs.html)
-* [Node.js http.get - Documentación oficial](https://nodejs.org/api/http.html#http_http_get_options_callback)
-* [Node.js - Wikipedia](https://es.wikipedia.org/wiki/Node.js)
-* [What exactly is Node.js? - freeCodeCamp](https://medium.freecodecamp.org/what-exactly-is-node-js-ae36e97449f5)
-* [¿Qué es Node.js y para qué sirve? - drauta.com](https://www.drauta.com/que-es-nodejs-y-para-que-sirve)
-* [¿Qué es Nodejs? Javascript en el Servidor - Fazt en YouTube](https://www.youtube.com/watch?v=WgSc1nv_4Gw)
-* [¿Simplemente qué es Node.js? - IBM Developer Works, 2011](https://www.ibm.com/developerworks/ssa/opensource/library/os-nodejs/index.html)
-* [Node.js y npm](https://www.genbeta.com/desarrollo/node-js-y-npm)
-* [Asíncronía en js](https://carlosazaustre.es/manejando-la-asincronia-en-javascript)
-* [NPM](https://docs.npmjs.com/getting-started/what-is-npm)
-* [Publicar packpage](https://docs.npmjs.com/getting-started/publishing-npm-packages)
-* [Crear módulos en Node.js](https://docs.npmjs.com/getting-started/publishing-npm-packages)
-* [Leer un archivo](https://nodejs.org/api/fs.html#fs_fs_readfile_path_options_callback)
-* [Leer un directorio](https://nodejs.org/api/fs.html#fs_fs_readdir_path_options_callback)
-* [Path](https://nodejs.org/api/path.html)
-* [Linea de comando CLI](https://medium.com/netscape/a-guide-to-create-a-nodejs-command-line-package-c2166ad0452e)
+7. **gradient-string:** Esta librería de Node.js se utiliza para generar gradientes de colores en la consola, lo que mejora la presentación y experiencia visual al mostrar los resultados de la API.
 
-## 9. Checklist
+El uso de `gradient-string` agrega un toque estético a la presentación de resultados en la consola, mejorando la experiencia del usuario al interactuar con la API.
 
-### General
+## 6. Proceso de desarrollo
 
-* [ ] Puede instalarse via `npm install --global <github-user>/md-links`
+El desarrollo de la API `mdLinks` siguió un proceso organizado y estructurado para garantizar la calidad y funcionalidad del producto final. A continuación, se describen las etapas clave del proceso de desarrollo:
 
-### `README.md`
+1. **Definición de Requisitos:** En esta etapa inicial, se definieron los requisitos y funcionalidades que debía cumplir la API. Se identificaron las principales características, como la búsqueda de enlaces en archivos markdown, la validación del estado de los enlaces y la generación de estadísticas.
 
-* [ ] Un board con el backlog para la implementación de la librería.
-* [ ] Documentación técnica de la librería.
-* [ ] Guía de uso e instalación de la librería
+2. **Diseño de la Arquitectura:** Se diseñó la arquitectura general de la API, definiendo los módulos y componentes necesarios para su funcionamiento. Se tomó la decisión de utilizar CommonJS para el desarrollo.
 
-### API `mdLinks(path, opts)`
+3. **Implementación Mayoritariamente con Promesas:** Durante la implementación, se hizo un esfuerzo por utilizar en su mayoría promesas para gestionar las operaciones asíncronas. Esto permitió un código más legible y mantenible.
 
-* [ ] El módulo exporta una función con la interfaz (API) esperada.
-* [ ] Implementa soporte para archivo individual
-* [ ] Implementa soporte para directorios
-* [ ] Implementa `options.validate`
+4. **Pruebas Unitarias con Uso de Mock:** Se llevaron a cabo pruebas unitarias para asegurar el correcto funcionamiento de cada módulo y funcionalidad. Para ello, se utilizaron mocks para simular algunos escenarios y garantizar que la API respondiera adecuadamente a diversas situaciones.
 
-### CLI
+5. **Diagrama de Flujo del Funcionamiento de la API:** A continuación, se presenta el diagrama de flujo que muestra el funcionamiento general de la API `mdLinks`:
 
-* [ ] Expone ejecutable `md-links` en el path (configurado en `package.json`)
-* [ ] Se ejecuta sin errores / output esperado
-* [ ] Implementa `--validate`
-* [ ] Implementa `--stats`
+<iframe style="border: 1px solid rgba(0, 0, 0, 0.1);" width="800" height="450" src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Ffile%2FweIHe2P4RsK9SNrlm5TVNu%2FDiagrama-de-flujo%3Ftype%3Dwhiteboard%26node-id%3D0%253A1%26t%3DtbWppajXoc5iTwpR-1" allowfullscreen></iframe>
 
-### Pruebas / tests
+6. **Planeación en GitHub Projects:** Para una gestión efectiva del desarrollo, se utilizó GitHub Projects, donde se definieron 6 milestones con el paso a paso del desarrollo. Cada milestone representó una etapa del proceso de desarrollo y se crearon tarjetas para cada funcionalidad o tarea. Estas tarjetas se organizaron en columnas según su estado (por hacer, en progreso, completadas, etc.), lo que permitió un seguimiento detallado y una distribución eficiente de las responsabilidades entre el equipo de desarrollo.
 
-* [ ] Pruebas unitarias cubren un mínimo del 70% de statements, functions,
-  lines, y branches.
-* [ ] Pasa tests (y linters) (`npm test`).
+![milestones](milestones.png)
 
-## 10. Achicando el problema
+![organización](organización.png)
 
-Un "superpoder" que esperamos puedas desarrollar durante el bootcamp
-es el de definir "mini-proyectos" que te acerquen paso a paso a
-la solución del "gran proyecto". Es el equivalente a comenzar armando
-esquinas o bordes del rompecabezas/puzzle sin saber necesariamente
-cómo encajarán al final. Déjate llevar y explora.
+El proceso de desarrollo de la API `mdLinks` se realizó de manera iterativa y colaborativa con mis compañeras, permitiendo una mejora continua y la incorporación de retroalimentación. 
 
-Estas son algunas sugerencias:
+## 7. Contactos y Enlaces
 
-### Empieza con un diagrama de flujo
+Para cualquier consulta, sugerencia o reporte de problemas relacionados con la API mdLinks, los usuarios pueden ponerse en contacto con la desarrolladora a través de los siguientes medios:
 
-Este proyecto es distinto de los que has venido trabajando hasta ahora
-dado que no hay una interfaz web, todo se desarrollará en tu editor y
-consola/terminal.
+- **Correo electrónico:** Se proporciona una dirección de correo electrónico, `mfop001new@gmail.com`, para recibir asistencia personalizada y resolver dudas.
 
-Es por ello que, para visualizar mejor lo que tendrás que hacer
-y planificar tus tareas y objetivos, es recomendable hacer un
-`diagrama de flujo`.
 
-Si nunca has hecho un diagrama de flujo revisa este [recurso](https://www.youtube.com/watch?v=Lub5qOmY4JQ).
+- **Repositorio en GitHub:** [https://github.com/MafeOrostegui/DEV009-md-links](https://github.com/MafeOrostegui/DEV009-md-links)
 
-Una alternativa al diagrama de flujo puede ser el `pseudocódigo`.
-
-### Planificación
-
-En este proyecto te recomendamos usar la herramienta de planificación
-y organización de GitHub llamada **Github Projects**.
-
-Mediante **issues** y **milestones** podrás organizar y planificar
-tareas y objetivos concretos.
-
-Tomando en consideración los **entregables** del proyecto, el
-[9. Checklist](#9-checklist) y los **pasos** que definiste en tu
-`diagrama de flujo`, crea tu planificación en GitHub Projects.
-
-### Antes de codear
-
-En esta ocasión estarás trabajando en **NodeJS**, asegúrate
-de saber para qué sirve y sus consideraciones.
-
-En particular, deberás decidir desde un comienzo si usarás
-`ES Modules`, es decir, **import/export**, ó, por el contrario,
-`CommonJS Modules`, es decir, **require/module.exports**.
-
-Asegurate de tener clara esta decisión desde un inicio para
-que no encuentres problemas más adelante.
-
-### Lee un archivo
-
-Como primer reto, puedes tratar de leer un solo archivo con
-una ruta fija e imprimir su contenido en la consola con un `console.log`.
-
-La librería nativa `FS` (FileSystem) te será de utilidad.
-
-**Recuerda**: Te sugerimos **no utilizar** la versión síncrona
-de la función para leer archivos, `readFileSync`, y en cambio
-intentar resolver ese desafío de manera asíncrona.
-
-### Averigua la extensión de un archivo
-
-Ya sabiendo leer un archivo, aventúrate a conocer cual
-es su extensión.
-
-Recuerda, las extensiones son esas letras al final del
-nombre de un archivo, por ejemplo: .js, .txt, .doc, etc
-
-Aquí también podrá ser útil `FS`.
-
-### Obtén el contenido de un directorio
-
-Este proyecto consiste en buscar archivos, pero para eso,
-primero debes poder verlos.
-
-Intenta imprimir en consola la lista de archivos en una carpeta.
-
-La librería `FS` también te será útil aquí.
-
-**Recuerda**: Para disminuir la complejidad de tu algoritmo
-recursivo, te recomendamos utilizar la versión síncrona de
-la función para leer directorios, `readdirSync`.
-
-### Une dos rutas
-
-Para poder acceder a carpetas y archivos será necesario que
-indiques en qué lugar de tu computadora se encuentran, a esto
-le llamamos **rutas**.
-
-Usa la librería nativa `path` para unir dos segmentos de ruta,
-por ejemplo, si queremos unir:
-
-1) /home/Laboratoria/
-2) ./test
-
-El resultado sería: /home/Laboratoria/test
-
-### Recursividad
-
-Este proyecto se ha de resolver de forma casi natural con
-**recursividad**.
-
-¿Por qué?.
-
-Porque no conocemos realmente cuantas carpetas y archivos
-tendremos que recorrer antes de terminar.
-
-Si recibes una ruta de carpeta, no sabrás de ante mano si
-dentro hay más carpetas o muchos archivos.
-
-Por ello, asegurate bien de entender de qué trata la
-recursividad y ver algunos ejemplos.
-
-Entre los recursos de este proyecto hay un video que te ayudará.
-
-### Crea una promesa
-
-El valor de retorno de nuestra librería es una `Promesa`,
-no un `Array`.
-
-Prueba leyendo sobre las promesas y creando una por tu
-cuenta utilizando **new Promise()**
-
-Es importante que sepas qué es un **callback** pues las
-promesas los utilizarán.
