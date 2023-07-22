@@ -1,6 +1,6 @@
 {
-  "name": "mdlinks",
-  "version": "0.1.0",
+  "name": "mdlinks-mafeorostegui",
+  "version": "0.1.1",
   "engines": {
     "node": ">=16.x"
   },
