@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="mdlinks.png" width="400px" alt="logo">
+  <img src="./mdlinks.png" width="400px" alt="logo">
 </p>
 
 ## Descripción
@@ -232,9 +232,9 @@ El desarrollo de la API `mdLinks` siguió un proceso organizado y estructurado p
 
 6. **Planeación en GitHub Projects:** Para una gestión efectiva del desarrollo, se utilizó GitHub Projects, donde se definieron 6 milestones con el paso a paso del desarrollo. Cada milestone representó una etapa del proceso de desarrollo y se crearon tarjetas para cada funcionalidad o tarea. Estas tarjetas se organizaron en columnas según su estado (por hacer, en progreso, completadas, etc.), lo que permitió un seguimiento detallado y una distribución eficiente de las responsabilidades entre el equipo de desarrollo.
 
-![milestones](milestones.png)
+![milestones](./milestones.png)
 
-![organización](organización.png)
+![organización](./organización.png)
 
 El proceso de desarrollo de la API `mdLinks` se realizó de manera iterativa y colaborativa con mis compañeras, permitiendo una mejora continua y la incorporación de retroalimentación. 
 
